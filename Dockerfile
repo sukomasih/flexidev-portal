@@ -11,14 +11,13 @@ WORKDIR /app
 COPY package*.json ./
 
 # install project dependencies
-#RUN npm install
-RUN NODE_ENV=development npm i
+RUN npm install
 
 # copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
 
 # build app for production with minification
-RUN npm run build
+RUN export NODE_OPTIONS=--openssl-legacy-provider && npm run build
 
 EXPOSE 8080
 CMD [ "http-server", "dist" ]
